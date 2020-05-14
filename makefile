@@ -1,8 +1,8 @@
 CC = g++
-INC = -Imodules/string/include
+INC = -Istring/include
 
 SRC = ./src
-STRING_MODULE_SRC = ./modules/string/src
+STRING_MODULE_SRC = ./string/src
 
 all: main
 

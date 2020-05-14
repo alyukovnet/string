@@ -1,2 +1,7 @@
-# learning-tasks
-Tasks I performed for programming learning
+# Лабораторная работа
+Вариант 32.
+## Запуск:
+```
+make
+./main
+```
