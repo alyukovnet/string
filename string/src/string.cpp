@@ -52,14 +52,50 @@ int String::getLen() const
     return len;
 }
 
-char String::getChar(int pos) const
+char String::getChar(int index) const
 {
-    if (pos < len) {
-        return pCh[pos];
-    } else {
-        return '\0';
-        std::cout << "Error: Position out of range" << std::endl;
+    if (index >= 0 && index < len) {
+        std::cout << "char String::getChar(int index)" << std::endl;
+        return pCh[index];
     }
+    return '\0';
+}
+
+char& String::operator[](int index)
+{
+    if (index >= 0 && index < len) {
+        std::cout << "char& String::operator[](int index)" << std::endl;
+        return pCh[index];
+    }
+    return pCh[0];
+}
+
+String String::operator~()
+{
+    int i, j;
+    char tmp;
+    for (i = 0, j = len - 1; i < len / 2; i++, j--) {
+        tmp = pCh[i];
+        pCh[i] = pCh[j];
+        pCh[j] = tmp;
+    }
+    std::cout << "String String::operator~()" << std::endl;
+    return *this;
+}
+
+String operator+(const String& pobj1, const String& pobj2)
+{
+    //IdentStr tmp(pobj1);
+    String tmp(pobj1.getLen() + pobj2.getLen());
+    //strcpy_s(tmp.pCh,tmp.len+1, pobj1.GetStr());
+    int i = 0,j=0;
+    while (tmp[i++] = pobj1.getStr()[j++]);
+    //strcat_s(tmp.pCh,tmp.len+1, pobj2.GetStr());
+    --i; //i = pobj1.GetLen();
+    j = 0;
+    //while (tmp[i++] = pobj2[j++];
+    std::cout << "IdentStr operator + (const IdentStr pobj1,const IdentStr pobj2)" << std::endl;
+    return tmp;
 }
 
 }
