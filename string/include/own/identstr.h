@@ -2,11 +2,11 @@
 \file
 \brief Заголовочный файл с описанием классов
 
-Данный файл содержит в себе определения основных 
-классов, используемых в демонстрационной программе
+Данный файл содержит в себе определения производного
+от "Строка" класса "Строка-идентификатор"
 */
-#ifndef STRING_MODULE_IDENTSTRING_H
-#define STRING_MODULE_IDENTSTRING_H
+#ifndef STRING_MODULE_IDENTSTR_H
+#define STRING_MODULE_IDENTSTR_H
 
 #include "string.h"
 
@@ -31,7 +31,7 @@ public:
 
     /*!
     Конструктор, принимающий в качестве параметра символ (char)
-    \param[in] ch Исходная область памяти
+    \param[in] ch Символ
     */
 	IdentStr(char ch);
 
@@ -53,26 +53,45 @@ public:
 	~IdentStr();
 
 	/*!
-	Оператор &
+	Подсчет количества  цифр в строке
+	*/
+	int getNumsNum();
+
+	/*! 
+	Оператор присваивания
 	*/
 	IdentStr& operator=(const IdentStr&);
 
-	/*!
-	Оператор [int]
+	/*! 
+	Объединение строк
+	\result Строка, cодержащая все символы первой строки и символы второй строки, отсутствующие в первой
 	*/
-	//char& operator[](int);
+    friend String operator&(const String&, const String&);
 
-	/*!
-	Поворот строки
+	/*! 
+	Объединение строк
+	\result Строка, cодержащая все символы первой строки и символы второй строки, отсутствующие в первой
 	*/
-	IdentStr operator~();
+    friend String operator&(const char*, const String&);
 
-	friend IdentStr operator+(const IdentStr&, const IdentStr&);
+	/*! 
+	Объединение строк
+	\result Строка, cодержащая все символы первой строки и символы второй строки, отсутствующие в первой
+	*/
+    friend String operator&(const String&, const char*);
 
-	friend IdentStr operator+(const IdentStr&, const char*);
+	/*! 
+	Объединение строк
+	\result Строка, cодержащая все символы первой строки и символы второй строки, отсутствующие в первой
+	*/
+    IdentStr& operator&=(const IdentStr&);
 
-	friend IdentStr operator+(const char*, const IdentStr&);
+	/*! 
+	Объединение строк
+	\result Строка, cодержащая все символы первой строки и символы второй строки, отсутствующие в первой
+	*/
+    IdentStr& operator&=(const char*);
 };
 
 }
-#endif // STRING_MODULE_STRING_H
+#endif // STRING_MODULE_IDENTSTR_H

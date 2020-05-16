@@ -28,7 +28,7 @@ public:
 
     /*!
     Конструктор, принимающий в качестве параметра символ (char)
-    \param[in] ch Исходная область памяти
+    \param[in] ch Символ
     */
     String(char);
 
@@ -62,7 +62,7 @@ public:
     int getLen() const;
 
     /*!
-    Вывод значений переменных класса
+    Вывод в консоль значений переменных класса
     */
     void show() const;
     
@@ -85,6 +85,55 @@ public:
     \return Перевёрнутая строка
     */
     String operator~();
+
+    /*!
+    Оператор присваивания
+    */
+    String& operator=(const String&);
+
+    /*!
+    Унарный плюс
+    \return Исходная строка
+    */
+    friend const String& operator+(const String& i);
+
+    /*!
+    Сложение строк
+    \return Объединённая строка
+    */
+    friend String operator+(const String&, const String&);
+
+    /*!
+    Сложение строк
+    \return Объединённая строка
+    */
+    friend String operator+(const char* pobj2, const String&);
+
+    /*!
+    Сложение строк
+    \return Объединённая строка
+    */
+    friend String operator+(const String&, const char* pobj2);
+
+    /*!
+    Сложение строк
+    */
+    String& operator+=(const String&);
+
+    /*!
+    Сложение строк
+    */
+    String& operator+=(const char* pobj2);
+
+    /*!
+    Посимвольная проверка равенства строк
+    */
+    friend int operator==(const String&, const String&);
+
+    /*!
+    Посимвольная проверка различности строк
+    */
+    friend int operator!=(const String&, const String&);
 };
 
 }
