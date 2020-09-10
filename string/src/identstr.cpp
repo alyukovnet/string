@@ -11,23 +11,10 @@ IdentStr::IdentStr(int val) : String(val)
     std::cout << "IdentStr::IdentStr(int val) : String(val), val = " << val << std::endl;
 }
 
-IdentStr::IdentStr(char Ch) : String(Ch)
-{
-    if(!((pCh[0] >= 'a' && pCh[0] <= 'z') || (pCh[0] >= 'A'&& pCh[0] <= 'Z') || (pCh[0]=='_'))) {
-        std::cout << "Bad Simvol, pCh[0] = " << pCh[0] << std::endl;
-        delete[] pCh;
-        len = 0;
-        pCh = new char[len + 1];
-        pCh[0] = '\0';
-        return;
-    }
-    std::cout << "IdentStr::IdentStr(char Ch) : String(Ch)" << std::endl;
-}
-
 IdentStr::IdentStr(const char* Str) : String(Str)
 {
-    if (!((pCh[0] >= 'a'&& pCh[0] <= 'z') || (pCh[0] >= 'A'&& pCh[0] <= 'Z') || (pCh[0] == '_'))) {
-        std::cout << "Bad Simvol, pCh[0] = " << pCh[0] << std::endl;
+    if (!((pCh[0] >= 'a' && pCh[0] <= 'z') || (pCh[0] >= 'A'&& pCh[0] <= 'Z') || (pCh[0] == '_'))) {
+        std::cout << "Bad symbol, pCh[0] = " << pCh[0] << std::endl;
         delete[] pCh;
         len = 0;
         pCh = new char[len + 1];
@@ -35,7 +22,7 @@ IdentStr::IdentStr(const char* Str) : String(Str)
         return;
     }
     for (int i = 1; i < len; i++) {
-        if(!((pCh[i] >= 'a'&& pCh[i] <= 'z') || (pCh[i] >= 'A'&& pCh[i] <= 'Z') || (pCh[i] >= '0'&& pCh[i] <= '9') || (pCh[i] == '_'))) {
+        if (!((pCh[i] >= 'a' && pCh[i] <= 'z') || (pCh[i] >= 'A' && pCh[i] <= 'Z') || (pCh[i] >= '0' && pCh[i] <= '9') || (pCh[i] == '_'))) {
             std::cout << "Bad String, pCh[" << i << "] = " << pCh[i] << std::endl;
             delete[] pCh;
             len = 0;
@@ -57,6 +44,17 @@ IdentStr::~IdentStr()
     std::cout << "IdentStr::~IdentStr()" << std::endl;
 }
 
+int IdentStr::getDigitsNum()
+{
+    int digitsNum = 0;
+    for (int i = 1; i < len; i++) {
+        if (pCh[i] >= '0' && pCh[i] <= '9') {
+            digitsNum++;
+        }
+    }
+    return digitsNum;
+}
+
 IdentStr& IdentStr::operator=(const IdentStr& S)
 {
     if (&S != this) {
@@ -69,108 +67,69 @@ IdentStr& IdentStr::operator=(const IdentStr& S)
     return *this;
 }
 
-// char& IdentStr::operator[](int index)
-// {
-//     if (index >= 0 && index < len) {
-//         std::cout << "char& IdentStr::operator[](int index)" << std::endl;
-//         return pCh[index];
-//     }
-//     return pCh[0];
-//     return 
-// }
-
-IdentStr IdentStr::operator~()
+IdentStr operator&(const IdentStr& pobj1, const IdentStr& pobj2)
 {
-    return IdentStr((~String(pCh)).getStr());
-}
-
-IdentStr operator+(const IdentStr& pobj1, const IdentStr& pobj2)
-{
-    //IdentStr tmp(pobj1);
-    IdentStr tmp(pobj1.getLen() + pobj2.getLen());
-    //strcpy_s(tmp.pCh,tmp.len+1, pobj1.GetStr());
-    int i = 0,j=0;
-    while (tmp.pCh[i++] = pobj1.pCh[j++]);
-    //strcat_s(tmp.pCh,tmp.len+1, pobj2.GetStr());
-    --i; //i = pobj1.GetLen();
+    bool check[256];
+    for (int i = 0; i < pobj1.len; i++) {
+        check[pobj1.pCh[i]] = true;
+    }
+    char* tmp2 = new char[pobj2.len];
+    int j = 0;
+    for (int i = 0; i < pobj2.len; i++) {
+        if (!check[pobj2.pCh[i]]) {
+            tmp2[j++] = pobj2.pCh[i];
+        }
+    }
+    IdentStr tmp(pobj1.len + j);
+    int i = 0;
     j = 0;
-    while (tmp.pCh[i++] = pobj2.pCh[j++]);
-    std::cout << "IdentStr operator + (const IdentStr pobj1,const IdentStr pobj2)" << std::endl;
+    while (tmp.pCh[i++] = pobj1.pCh[j++]);
+    j = 0;
+    while (tmp.pCh[i++] = tmp2[j++]);
+    std::cout << "IdentStr operator&(const IdentStr& pobj1, const IdentStr& pobj2)" << std::endl;
     return tmp;
 }
 
-IdentStr operator+(const IdentStr& pobj1, const char* pobj2)
+IdentStr operator&(const IdentStr& pobj1, const char* pobj2)
 {
-//IdentStr tmp(pobj1);
-IdentStr tmp1(pobj2);
-//if (tmp1.len == 0)
-//{
-// IdentStr tmp(pobj1.GetLen());
-// int i = 0, j = 0; //i = pobj1.GetLen();
-// while (tmp.pCh[i++] = pobj1.pCh[j++]);
-// cout << "IdentStr operator + ( const IdentStr& pobj1,const char* pobj2,)" << endl;
-// return tmp;
-//}
-//else
-//{
-IdentStr tmp(pobj1.getLen() + tmp1.getLen());
-//IdentStr tmp(pobj1.GetLen() + (int)strlen(pobj2));
-int i = 0, j = 0;
-while (tmp.pCh[i++] = pobj1.pCh[j++]);
-//strcat_s(tmp.pCh,tmp.len+1, pobj2.GetStr());
---i; //i = pobj1.GetLen();
-j = 0;
-//while (tmp.pCh[i++] = *pobj2++);
-while (tmp.pCh[i++] = tmp1.pCh[j++]);
-std::cout << "IdentStr operator + (const IdentStr& pobj1,const char* pobj2)" << std::endl;
-return tmp;
-//}
-//IdentStr tmp(pobj1.GetLen() + (int)strlen(pobj2));
-//strcpy_s(tmp.pCh,tmp.len+1, pobj1.GetStr());
-//int i = 0, j = 0;
-//while (tmp.pCh[i++] = pobj1.pCh[j++]);
-//strcat_s(tmp.pCh,tmp.len+1, pobj2);
-//--i; //i = pobj1.GetLen();
-//j = 0;
-//while (tmp.pCh[i++] = pobj2[j++]);
-//while (tmp.pCh[i++] = *pobj2++);
-//std::cout << "IdentStr operator + (const IdentStr pobj1,const char* pobj2)" << std::endl;
-
-//return tmp;
-
-}
-
-IdentStr operator +(const char* pobj1, const IdentStr& pobj2)
-{
-    IdentStr tmp1(pobj1);
-    if (tmp1.len == 0) {
-        IdentStr tmp( pobj2.getLen());
-        int i=0, j = 0; //i = pobj1.GetLen();
-        while (tmp.pCh[i++] = pobj2.pCh[j++]);
-        std::cout << "IdentStr operator + (const char* pobj1, const IdentStr& pobj2)" << std::endl;
-        return tmp;
-    } else {
-        IdentStr tmp((int)strlen(pobj1) + pobj2.getLen());
-        int i = 0, j = 0;
-        while (tmp.pCh[i++] = *pobj1++);
-        //strcat_s(tmp.pCh,tmp.len+1, pobj2.GetStr());
-        --i; //i = pobj1.GetLen();
-        //j = 0;
-        while (tmp.pCh[i++] = pobj2.pCh[j++]);
-        std::cout << "IdentStr operator + (const char* pobj1, const IdentStr& pobj2)" << std::endl;
+    if (pobj1.len == 0) {
+        IdentStr tmp(pobj2);
         return tmp;
     }
+    int pobj2len = strlen(pobj2);
 
-    //IdentStr tmp((int)strlen(pobj1) + pobj2.GetLen());
-    //strcpy_s(tmp.pCh,tmp.len+1, pobj1);
-    //int i = 0, j = 0;
-    //while (tmp.pCh[i++] = *pobj1++);
-    //strcat_s(tmp.pCh,tmp.len+1, pobj2.GetStr());
-    //--i; //i = pobj1.GetLen();
-    //j = 0;
-    //while (tmp.pCh[i++] = pobj2.pCh[j++]);
-    //std::cout << "IdentStr operator + (const char* pobj2, const IdentStr pobj1)" << std::endl;
-    //return tmp;
+    bool check[256];
+    for (int i = 0; i < pobj1.len; i++) {
+        check[pobj1.pCh[i]] = true;
+    }
+    char* tmp2 = new char[pobj2len];
+    int j = 0;
+    for (int i = 0; i < pobj2len; i++) {
+        if (!((pobj2[i] >= 'a' && pobj2[i] <= 'z') || (pobj2[i] >= 'A' && pobj2[i] <= 'Z') ||
+        (pobj2[i] >= '0' && pobj2[i] <= '9') || (pobj2[i] == '_'))) {
+            std::cout << "Bad String, pobj2[" << i << "] = " << pobj2[i] << std::endl;
+            IdentStr tmp(0);
+            return tmp;
+        }
+
+        if (!check[pobj2[i]]) {
+            tmp2[j++] = pobj2[i];
+        }
+    }
+    IdentStr tmp(pobj1.len + j);
+    int i = 0;
+    j = 0;
+    while (tmp.pCh[i++] = pobj1.pCh[j++]);
+    j = 0;
+    while (tmp.pCh[i++] = tmp2[j++]);
+    std::cout << "IdentStr operator&(const IdentStr& pobj1, const char* pobj2)" << std::endl;
+    return tmp;
+}
+
+IdentStr operator&(const char* pobj1, const IdentStr& pobj2)
+{
+    IdentStr tmp1(pobj1);
+    return tmp1 & pobj2;
 }
 
 }
