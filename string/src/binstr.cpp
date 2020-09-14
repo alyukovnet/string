@@ -1,3 +1,10 @@
+/*!
+\file
+\brief Реализация методов класса "Битовая строка"
+
+Данный файл содержит в себе реализации методов производного
+от "Строка" класса "Битовая строка"
+*/
 #include <iostream>
 #include <cstring>
 
@@ -49,9 +56,19 @@ BinStr::~BinStr()
 int BinStr::getSign()
 {
     if (pCh[0] == '0')
-        return SIGN::PLUS;
+        return SIGN::POSITIVE;
     else
-        return SIGN::MINUS;
+        return SIGN::NEGATIVE;
+}
+
+bool BinStr::isPositive()
+{
+    return getSign() == SIGN::POSITIVE;
+}
+
+bool BinStr::isNegative()
+{
+    return getSign() == SIGN::NEGATIVE;
 }
 
 int BinStr::getNum() const

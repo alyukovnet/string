@@ -16,8 +16,6 @@ add_library(string STATIC ${SOURCES} ${HEADERS})
 target_include_directories(string PUBLIC include)
 
 # Testing
-enable_testing()
-
 add_executable(test_string test/test_string.cpp)
 target_link_libraries(test_string PUBLIC catch2)
 target_link_libraries(test_string PUBLIC string)

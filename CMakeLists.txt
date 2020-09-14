@@ -8,8 +8,9 @@ set(CMAKE_CXX_STANDARD 11)
 add_subdirectory(thirdparty/catch2)
 
 # String library
+enable_testing()
 add_subdirectory(string)
 
 # Examples
-add_subdirectory(examples/cli)
+add_subdirectory(examples)
 
