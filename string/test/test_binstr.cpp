@@ -107,10 +107,10 @@ TEST_CASE("Оператор == 2 бинарные строки", "[BinStr]") {
 
 TEST_CASE("Оператор == бинарная строка и число", "[BinStr]") {
     own::BinStr a("0110");
-    REQUIRE(a == 3);
+    REQUIRE(a == 6);
 }
 
 TEST_CASE("Оператор == число и бинарная строка", "[BinStr]") {
     own::BinStr b("00110");
-    REQUIRE(3 == b);
+    REQUIRE(6 == b);
 }
