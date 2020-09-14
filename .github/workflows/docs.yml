@@ -20,9 +20,9 @@ jobs:
         working-directory: .
       
     - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@v3.7.0-8
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
         external_repository: alyukovnet/alyukovnet
         destination_dir: ./string
         publish_dir: ./docs
