@@ -1,6 +1,6 @@
 /*!
 \file
-\brief Заголовочный файл с описанием классов
+\brief Заголовочный файл с описанием класса "Битовая строка"
 
 Данный файл содержит в себе определения производного
 от "Строка" класса "Битовая строка"
@@ -57,19 +57,25 @@ public:
 	Получение знака двоичного числа
 	\return Знак числа SIGN::POSITIVE или SIGN::NEGATIVE
 	*/
-	int getSign();
+	int getSign() const;
 
     /*!
     Проверка на положительное число
     \return Является ли число положительным
     */
-    bool isPositive();
+    bool isPositive() const;
 
     /*!
     Проверка на отрицательное число
     \return Является ли число отрицательным
     */
-    bool isNegative();
+    bool isNegative() const;
+
+    /*!
+	Преобразование строки в беззнаковое число
+    \return Беззнаковое число
+	*/
+    int getUnsignedNum() const;
 
     /*!
 	Преобразование строки в число
@@ -92,23 +98,28 @@ public:
     Операция "исключающее или"
     \return Сумма по модулю 2
     */
-    friend BinStr operator^(const BinStr&, const BinStr&);
+    friend BinStr operator^(const BinStr&, int);
 
     /*!
     Операция "исключающее или"
     \return Сумма по модулю 2
     */
-    friend BinStr operator^(const int, const BinStr&);
+    friend BinStr operator^(int, const BinStr&);
 
     /*!
     Проверка равенства строк как бинарных чисел
     */
-    friend int operator==(const String&, const int);
+    friend int operator==(const BinStr&, const BinStr&);
 
     /*!
-    Проверка равенства строк как бинарных чисел
+    Проверка равенства бинарной строки и числа
     */
-    friend int operator==(const int, const String&);
+    friend int operator==(const BinStr&, int);
+
+    /*!
+    Проверка равенства бинарной строки и числа
+    */
+    friend int operator==(int, const BinStr&);
 };
 
 }

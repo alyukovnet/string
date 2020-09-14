@@ -1,3 +1,10 @@
+/*!
+\file
+\brief Реализация методов класса "Строка-идентификатор"
+
+Данный файл содержит в себе реализации методов производного
+от "Строка" класса "Строка-идентификатор"
+*/
 #include <iostream>
 #include <cstring>
 
@@ -70,6 +77,7 @@ IdentStr& IdentStr::operator=(const IdentStr& S)
 IdentStr operator&(const IdentStr& pobj1, const IdentStr& pobj2)
 {
     bool check[256];
+    memset(check,0,256);
     for (int i = 0; i < pobj1.len; i++) {
         check[pobj1.pCh[i]] = true;
     }
@@ -84,6 +92,7 @@ IdentStr operator&(const IdentStr& pobj1, const IdentStr& pobj2)
     int i = 0;
     j = 0;
     while (tmp.pCh[i++] = pobj1.pCh[j++]);
+    i = pobj1.len;
     j = 0;
     while (tmp.pCh[i++] = tmp2[j++]);
     std::cout << "IdentStr operator&(const IdentStr& pobj1, const IdentStr& pobj2)" << std::endl;
@@ -99,6 +108,7 @@ IdentStr operator&(const IdentStr& pobj1, const char* pobj2)
     int pobj2len = strlen(pobj2);
 
     bool check[256];
+    memset(check,0,256);
     for (int i = 0; i < pobj1.len; i++) {
         check[pobj1.pCh[i]] = true;
     }
@@ -117,9 +127,11 @@ IdentStr operator&(const IdentStr& pobj1, const char* pobj2)
         }
     }
     IdentStr tmp(pobj1.len + j);
+
     int i = 0;
     j = 0;
     while (tmp.pCh[i++] = pobj1.pCh[j++]);
+    i = pobj1.len;
     j = 0;
     while (tmp.pCh[i++] = tmp2[j++]);
     std::cout << "IdentStr operator&(const IdentStr& pobj1, const char* pobj2)" << std::endl;
@@ -129,6 +141,9 @@ IdentStr operator&(const IdentStr& pobj1, const char* pobj2)
 IdentStr operator&(const char* pobj1, const IdentStr& pobj2)
 {
     IdentStr tmp1(pobj1);
+    if (tmp1.len == 0) {
+        return IdentStr(0);
+    }
     return tmp1 & pobj2;
 }
 

@@ -20,7 +20,7 @@ BinStr::BinStr(int val) : String(val)
 
 BinStr::BinStr(const char* Str) : String(Str)
 {
-    if (!((pCh[0] >= '1' && pCh[0] <= '9') || (pCh[0] == '-' && pCh[0] == '+') || pCh[0] != '0')) {
+    if (!((pCh[0] >= '0' && pCh[0] <= '9'))) {
         std::cout << "Bad symbol, pCh[0]=" << pCh[0] << std::endl;
         if (pCh) delete[] pCh;
         len = 0;
@@ -39,7 +39,7 @@ BinStr::BinStr(const char* Str) : String(Str)
             return;
         }
     }
-    std::cout << "DecStr::DecStr( char* Str):String(Str)" << std::endl;
+    std::cout << "BinStr::BinStr( char* Str):String(Str)" << std::endl;
     //cout << "fun1=" << fun1() << endl;
 }
 
@@ -53,30 +53,48 @@ BinStr::~BinStr()
     std::cout << "BinStr::~BinStr()" << std::endl;
 }
 
-int BinStr::getSign()
+int BinStr::getSign() const
 {
-    if (pCh[0] == '0')
-        return SIGN::POSITIVE;
-    else
+    if (pCh[0] == '1')
         return SIGN::NEGATIVE;
+    else
+        return SIGN::POSITIVE;
 }
 
-bool BinStr::isPositive()
+bool BinStr::isPositive() const
 {
     return getSign() == SIGN::POSITIVE;
 }
 
-bool BinStr::isNegative()
+bool BinStr::isNegative() const
 {
     return getSign() == SIGN::NEGATIVE;
 }
 
-int BinStr::getNum() const
+int BinStr::getUnsignedNum() const
 {
     int tmp = 0;
     for (int i = 0; i < len; i++) {
         tmp *= 2;
         tmp += pCh[i]-'0';
+    }
+    return tmp;
+}
+
+int BinStr::getNum() const
+{
+    int tmp = 0;
+    if (isPositive()) {
+        for (int i = 0; i < len; i++) {
+            tmp *= 2;
+            tmp += pCh[i]-'0';
+        }
+    } else {
+        for (int i = 0; i < len; i++) {
+            tmp *= 2;
+            tmp += '1'-pCh[i];
+        }
+        tmp = -tmp - 1;
     }
     return tmp;
 }
@@ -94,76 +112,77 @@ BinStr& BinStr::operator=(const BinStr& Ds)
 }
 
 BinStr operator^(const BinStr& pobj1, const BinStr& pobj2) {
-    BinStr tmp;
     if (pobj1.len >= pobj2.len) {
-        tmp.len = pobj1.len;
-        tmp.pCh = new char[tmp.len];
-        int i = 0;
-        for (; i < pobj1.len - pobj2.len; i++) {
+        BinStr tmp(pobj1.len);
+        int i = pobj1.len - 1;
+        int j = pobj2.len - 1;
+        for (; j>=0; i--, j--) {
+            tmp.pCh[i] = (pobj1.pCh[i] == pobj2.pCh[j]) ? '0' : '1';
+        }
+        for (; i>=0; i--) {
             tmp.pCh[i] = pobj1.pCh[i];
         }
-        for (; i < pobj1.len; i++) {
-            tmp.pCh[i] = (pobj1.pCh[i]^pobj2.pCh[i]) & 1 + '0';
-        }
+        return tmp;
     } else {
-        tmp.len = pobj2.len;
-        tmp.pCh = new char[tmp.len];
-        int i = 0;
-        for (; i < pobj2.len - pobj1.len; i++) {
+        BinStr tmp(pobj2.len);
+        int i = pobj2.len - 1;
+        int j = pobj1.len - 1;
+        for (; j>=0; i--, j--) {
+            tmp.pCh[i] = (pobj2.pCh[i] == pobj1.pCh[j]) ? '0' : '1';
+        }
+        for (; i>=0; i--) {
             tmp.pCh[i] = pobj2.pCh[i];
         }
-        for (; i < pobj2.len; i++) {
-            tmp.pCh[i] = (pobj1.pCh[i]^pobj2.pCh[i]) & 1 + '0';
-        }
+        return tmp;
     }
 }
 
-BinStr operator^(const int pobj1, const BinStr& pobj2) {
-    BinStr tmp;
-    int pobj1len = 1;
+BinStr operator^(int pobj1, const BinStr& pobj2) {
+    int pobj1len = 0;
     int pobj1i = pobj1;
-    while (pobj1i/=2 != 0) pobj1len++;
+    for (; pobj1i != 0; pobj1i >>= 1, pobj1len++);
+
     if (pobj1len >= pobj2.len) {
-        tmp.len = pobj1len;
-        tmp.pCh = new char[tmp.len];
+        BinStr tmp(pobj1len);
         int i = pobj1len - 1;
-        for (; i >= pobj1len - pobj2.len; i--) {
-            int digit = pobj1 % 2;
+        int j = pobj2.len - 1;
+        for (; j>=0; i--, j--) {
+            tmp.pCh[i] = ((pobj1 % 2) == (pobj2.pCh[j]-'0')) ? '0' : '1';
             pobj1 >> 1;
-            tmp.pCh[i] = (digit^(pobj2.pCh[i]-'0')) & 1 + '0';
         }
-        for (; i >= 0; i--) {
-            int digit = pobj1 % 2;
+        for (; i>=0; i--) {
+            tmp.pCh[i] = (pobj1 % 2 == 0) ? '0' : '1';
             pobj1 >> 1;
-            tmp.pCh[i] = digit + '0';
         }
+        return tmp;
     } else {
-        tmp.len = pobj2.len;
-        tmp.pCh = new char[tmp.len];
+        BinStr tmp(pobj2.len);
         int i = pobj2.len - 1;
-        for (; i >= pobj2.len - pobj1len; i--) {
-            int digit = pobj1 % 2;
+        int j = pobj1len - 1;
+        for (; j>=0; i--, j--) {
+            tmp.pCh[i] = ((pobj2.pCh[i]-'0') == (pobj1 % 2)) ? '0' : '1';
             pobj1 >> 1;
-            tmp.pCh[i] = digit + '0';
         }
-        for (; i >= 0; i--) {
-            int digit = pobj1 % 2;
-            pobj1 >> 1;
-            tmp.pCh[i] = (digit^(pobj2.pCh[i]-'0')) & 1 + '0';
+        for (; i>=0; i--) {
+            tmp.pCh[i] = pobj2.pCh[i];
         }
+        return tmp;
     }
-    return tmp;
 }
 
-BinStr operator^(const BinStr& pobj1, const int pobj2) {
+BinStr operator^(const BinStr& pobj1, int pobj2) {
     return pobj2^pobj1;
 }
 
-int operator==(const BinStr& pobj1, const int pobj2) {
+int operator==(const BinStr& pobj1, const BinStr& pobj2) {
+    return pobj1.getNum() == pobj2.getNum();
+}
+
+int operator==(const BinStr& pobj1, int pobj2) {
     return pobj1.getNum() == pobj2;
 }
 
-int operator==(const int pobj1, const BinStr& pobj2) {
+int operator==(int pobj1, const BinStr& pobj2) {
     return pobj1 == pobj2.getNum();
 }
 
