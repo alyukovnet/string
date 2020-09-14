@@ -20,7 +20,7 @@ IdentStr::IdentStr(int val) : String(val)
 
 IdentStr::IdentStr(const char* Str) : String(Str)
 {
-    if (!((pCh[0] >= 'a' && pCh[0] <= 'z') || (pCh[0] >= 'A'&& pCh[0] <= 'Z') || (pCh[0] == '_'))) {
+    if (!((pCh[0] >= 'a' && pCh[0] <= 'z') || (pCh[0] >= 'A' && pCh[0] <= 'Z') || (pCh[0] == '_'))) {
         std::cout << "Bad symbol, pCh[0] = " << pCh[0] << std::endl;
         delete[] pCh;
         len = 0;

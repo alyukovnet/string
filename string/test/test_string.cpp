@@ -1,3 +1,10 @@
+/*!
+\file
+\brief Файл с тестами для базового класса String
+
+Данный файл содержит в себе модульные тесты для
+базового класса "Строка"
+*/
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
 
