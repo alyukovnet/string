@@ -2,16 +2,16 @@
 \file
 \brief Заголовочный файл с описанием класса "Строка"
 
-Данный файл содержит в себе определения базового
-класса "Строка"
+Данный файл содержит в себе определения
+базового класса "Строка"
 */
-#ifndef STRING_MODULE_STRING_H
-#define STRING_MODULE_STRING_H
+#ifndef OWN_STRING_STRING_H
+#define OWN_STRING_STRING_H
 
 namespace own {
 
 /*!
-	\brief Базовый класс "Строка" 
+\brief Базовый класс "Строка"
 */
 class String
 {
@@ -27,16 +27,16 @@ public:
     String(int = 0);
 
     /*!
-    Конструктор, принимающий в качестве параметра символ (char)
-    \param[in] ch Символ
-    */
-    String(char);
-
-    /*!
     Конструктор, принимающий в качестве параметра Си-строку (заканчивается нулевым байтом)
     \param[in] s Си-строка
     */
     String(const char*);
+
+    /*!
+    Конструктор, принимающий в качестве параметра символ (char)
+    \param[in] ch Символ
+    */
+    String(char);
     
     /*!
     Конструктор копирования
@@ -72,69 +72,7 @@ public:
     \return Символ
     */
     char getChar(int) const;
-
-    /*!
-    Получение ссылки на символ из заданной позиции
-    \param[in] index Позиция символа
-    \return Ссылка на символ
-    */
-    char& operator[](int);
-
-    /*!
-    Получение перевёрнутой строки
-    \return Перевёрнутая строка
-    */
-    String operator~();
-
-    /*!
-    Оператор присваивания
-    */
-    String& operator=(const String&);
-
-    /*!
-    Унарный плюс
-    \return Исходная строка
-    */
-    friend const String& operator+(const String& i);
-
-    /*!
-    Сложение строк
-    \return Объединённая строка
-    */
-    friend String operator+(const String&, const String&);
-
-    /*!
-    Сложение строк
-    \return Объединённая строка
-    */
-    friend String operator+(const char* pobj2, const String&);
-
-    /*!
-    Сложение строк
-    \return Объединённая строка
-    */
-    friend String operator+(const String&, const char* pobj2);
-
-    /*!
-    Сложение строк
-    */
-    String& operator+=(const String&);
-
-    /*!
-    Сложение строк
-    */
-    String& operator+=(const char* pobj2);
-
-    /*!
-    Посимвольная проверка равенства строк
-    */
-    friend int operator==(const String&, const String&);
-
-    /*!
-    Посимвольная проверка различности строк
-    */
-    friend int operator!=(const String&, const String&);
 };
 
 }
-#endif // STRING_MODULE_STRING_H
+#endif // OWN_STRING_STRING_H
