@@ -22,7 +22,7 @@ jobs:
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3.7.0-8
       with:
-        deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+        personal_token: ${{ secrets.PERSONAL_TOKEN }}
         external_repository: alyukovnet/alyukovnet
         destination_dir: ./string
         publish_dir: ./docs
