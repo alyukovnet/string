@@ -96,6 +96,7 @@ IdentStr operator&(const IdentStr& pobj1, const IdentStr& pobj2)
     j = 0;
     while (tmp.pCh[i++] = tmp2[j++]);
     std::cout << "IdentStr operator&(const IdentStr& pobj1, const IdentStr& pobj2)" << std::endl;
+    delete[] tmp2;
     return tmp;
 }
 
@@ -135,6 +136,7 @@ IdentStr operator&(const IdentStr& pobj1, const char* pobj2)
     j = 0;
     while (tmp.pCh[i++] = tmp2[j++]);
     std::cout << "IdentStr operator&(const IdentStr& pobj1, const char* pobj2)" << std::endl;
+    delete[] tmp2;
     return tmp;
 }
 

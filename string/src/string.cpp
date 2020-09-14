@@ -14,7 +14,7 @@ namespace own {
 
 String::String(int val) : len(val), pCh(new char[len + 1])
 {
-    memset(pCh,'\0', len);
+    pCh[0] = '\0';
     std::cout << "String::String(int val) : len = " << len << std::endl;
 }
 
