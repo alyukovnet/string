@@ -1,3 +1,5 @@
-add_executable(main main.cpp)
-target_link_libraries(main string)
-install(TARGETS main DESTINATION bin)
+project(examples CXX)
+
+# CLI
+add_executable(cli cli.cpp)
+target_link_libraries(cli string)
