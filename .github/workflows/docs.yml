@@ -26,4 +26,4 @@ jobs:
         external_repository: alyukovnet/alyukovnet
         destination_dir: ./string
         publish_dir: ./docs
-        publish_branch: master
+        publish_branch: gh-pages
